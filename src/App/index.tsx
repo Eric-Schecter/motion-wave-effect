@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styles from './index.module.scss';
 import {
-  Mesh, Scene, ShaderMaterial, WebGLRenderer, Clock, Vector2, 
+  Mesh, Scene, ShaderMaterial, WebGLRenderer, Clock, 
    PlaneBufferGeometry, PerspectiveCamera, TextureLoader,
 } from 'three';
 import fragment from './shader/fragment.frag';
@@ -13,7 +13,6 @@ class World {
   private timer = 0;
   private renderer: WebGLRenderer;
   private clock = new Clock();
-  private pointer = new Vector2();
   private loader = new TextureLoader();
   private material: ShaderMaterial;
   constructor(private container: HTMLDivElement) {
@@ -52,14 +51,6 @@ class World {
   public dispose = () => {
     cancelAnimationFrame(this.timer);
   }
-  public move = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY } = e;
-    const { clientWidth, clientHeight } = this.container;
-    this.pointer.set(
-      clientX / clientWidth - 0.5,
-      -clientY / clientHeight + 0.5,
-    )
-  }
 }
 
 export const App = () => {
@@ -73,13 +64,8 @@ export const App = () => {
     return () => refWorld.current?.dispose();
   }, [ref])
 
-  const move = (e: React.MouseEvent<HTMLDivElement>) => {
-    refWorld.current?.move(e);
-  }
-
   return <div
     ref={ref}
     className={styles.container}
-    onMouseMove={move}
   />
 }
