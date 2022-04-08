@@ -15,7 +15,7 @@ class World {
   private clock = new Clock();
   private loader = new TextureLoader();
   private material: ShaderMaterial;
-  constructor(private container: HTMLDivElement) {
+  constructor(container: HTMLDivElement) {
     const { offsetWidth: width, offsetHeight: height } = container;
     this.renderer = new WebGLRenderer();
     this.renderer.setClearColor(0x222222);
